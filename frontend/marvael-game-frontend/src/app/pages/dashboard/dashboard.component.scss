@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;0,900;1,500;1,700&display=swap");
+
+h6,
+.h6 {
+  font-size: calc(1.1rem + 0.2vw);
+  font-weight: 500;
+  margin-top: 1em;
+  font-family: "Roboto", sans-serif !important ;
+}
+
+p {
+  font-family: "Roboto", sans-serif !important ;
+  font-weight: 300;
+}
+
+.boxInfo {
+  width: 50em;
+  height: 35em;
+  background: linear-gradient(
+    rgba(190, 190, 190, 0.7),
+    rgba(170, 170, 170, 0.7)
+  );
+  border-radius: 15px;
+  padding: 0;
+  position: relative;
+  margin-left: 4em;
+}
+
+h6 {
+  margin-top: 1em;
+  margin-left: 2em;
+  display: inline;
+}
+
+.mazo {
+  width: 20em;
+  height: 34em;
+  background: linear-gradient(
+    rgba(190, 190, 190, 0.6),
+    rgba(170, 170, 170, 0.6)
+  );
+  border-radius: 15px;
+  text-align: center;
+  position: relative;
+  margin-left: 4em;
+}
+
+.topBox {
+  background: linear-gradient(
+    rgba(255, 255, 255, 1),
+    rgba(255, 255, 255, 1)
+  );
+  color: rgb(5, 5, 5);
+  font-family: "Roboto", sans-serif !important;
+  font-weight: 700;
+  border-top-right-radius: 13px;
+  border-top: 13px;
+  text-align: center;
+}
+
+.btn {
+  font-weight: bold;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(141, 158, 116, 0.635) 100%);
+  color: white;
+  border-radius: 3px;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  z-index: 1;
+  overflow: hidden;
+  display: inline-block;
+  margin: auto;
+}
+
+.btn:hover {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  padding: 16px 20px;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  right: -100%;
+  -webkit-transition: all 0.3s;
+  transition: all 0.35s;
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
+}
+
+.btn:hover::after {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: all 0.35s;
+  transition: all 0.5s;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 118, 255, 0.6348739324831495) 100%
+  );
+}
+
+#search-box {
+  position: relative;
+  width: 100%;
+  margin: 0;
+}
+#search-form {
+  height: 32px;
+  border: 1px solid #cbf3ee;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  background-color: #fff;
+  overflow: hidden;
+}
+#search-text {
+  font-size: 14px;
+  color: #ddd;
+  border-width: 0;
+  background: transparent;
+}
+
+#search-box input[type="text"] {
+  width: 90%;
+  padding: 8px 0 12px 1em;
+  color: #333;
+  outline: none;
+}
+#search-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 34px;
+  width: 80px;
+  font-size: 14px;
+  color: #656;
+  text-align: center;
+  line-height: 4px;
+  border-width: 0;
+  background-color: #cbf3ee;
+  -webkit-border-radius: 0px 15px 15px;
+  -moz-border-radius: 0px 15px 15px 15px;
+  border-radius: 15px 15px 15px 15px;
+  cursor: pointer;
+}
+
+#busqueda {
+  background-repeat: no-repeat;
+  background-position: 4px center;
+  background-size: 20px;
+  display: flex;
+  align-items: center;
+  width: 400px;
+  padding-left: 28px;
+  height: 45px;
+  border-radius: 3px;
+  background-color: white;
+  margin-left: 2em;
+  box-shadow: 2px 4px 2px rgb(214, 214, 227);
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+#boton {
+  display: none;
+}
+
+#busqueda input {
+  width: 100%;
+  font-size: 0.9em;
+  border: none;
+  background-color: white;
+  display: inline-block;
+}
+
+#busqueda input:focus {
+  outline: none;
+}
+
+.form {
+  display: inline-block;
+}
+
+.lista {
+  height: 17em;
+  overflow: auto;
+  text-align: left;
+  padding: 3em;
+}
+
+span {
+  color: #ff1d21;
+  font-size: 12px;
+}
+.px {
+  height: 10em;
+  width: 20em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.px2 {
+  height: 10em;
+  width: 18em;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  margin: 10px;
+  display: inline-block;
+}
