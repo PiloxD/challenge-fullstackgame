@@ -10,10 +10,11 @@ import org.example.cardgame.usecase.gateway.JuegoDomainEventRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
-
+import java.util.Set;
+import java.util.logging.Logger;
 
 public class PonerCartaEnTableroUseCase extends UseCaseForCommand<PonerCartaEnTablero> {
+    private final Logger log = Logger.getLogger(PonerCartaEnTableroUseCase.class.getCanonicalName());
     private final JuegoDomainEventRepository repository;
 
     public PonerCartaEnTableroUseCase(JuegoDomainEventRepository repository) {
@@ -32,21 +33,17 @@ public class PonerCartaEnTableroUseCase extends UseCaseForCommand<PonerCartaEnTa
                     var cartasDelJugador = juego.jugadores().get(jugadorId).mazo().value().cartas();
                     var cartaSeleccionado = seleccionarCarta(command.getCartaId(), cartasDelJugador);
 
-                    validarCantidadDelJugador(juego, jugadorId);
+                    var cantidad = (long) juego.tablero().partida()
+                            .get(jugadorId).size();
+                    if(cantidad > 1) {
+                        throw new IllegalArgumentException("No puede poner mas de 1 carta en el tablero");
+                    }
                     juego.ponerCartaEnTablero(tableroId, jugadorId, cartaSeleccionado);
                     return juego.getUncommittedChanges();
                 }));
     }
 
-    private void validarCantidadDelJugador(Juego juego, JugadorId jugadorId) {
-        var cantidad = (long) juego.tablero().partida()
-                .get(jugadorId).size();
-        if (cantidad >= 2) {
-            throw new IllegalArgumentException("No puede poner mas de 2 cartas en el tablero");
-        }
-    }
-
-    private Carta seleccionarCarta(String cartaId, java.util.Set<Carta> cartasDelJugador) {
+    private Carta seleccionarCarta(String cartaId, Set<Carta> cartasDelJugador) {
         return cartasDelJugador
                 .stream()
                 .filter(c -> c.value().cartaId().value().equals(cartaId))

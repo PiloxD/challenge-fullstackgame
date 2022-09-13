@@ -1,0 +1,118 @@
+.cuadro{
+  text-align: left;
+}
+.card-body{
+  padding: 10%;
+}
+.titulo{
+  text-align: center;
+}
+
+.btn{
+  font-size:0.5cm;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(141, 158, 116, 0.635) 100%);
+}
+.pregunta{
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+
+}
+
+
+.btn:hover{
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.btn::after{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  padding: 16px 20px;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  right: -100%;
+  -webkit-transition: all 0.30s;
+  transition: all 0.35s;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+}
+
+.btn:hover::after{
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: all 0.35s;
+  transition: all 0.50s;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,118,255,0.6348739324831495) 100%);
+}
+.create-card {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  padding-top: 100px;
+}
+
+.color-message {
+  color: rgb(0, 0, 0);
+  opacity: .7;
+}
+
+.btn{
+  font-size:0.5cm;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(141, 158, 116, 0.635) 100%);
+}
+
+.btn:hover{
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.btn::after{
+  content: "";
+  position: absolute;
+  z-index: -1;
+  padding: 16px 20px;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  right: -100%;
+  -webkit-transition: all 0.30s;
+  transition: all 0.35s;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+}
+
+.btn:hover::after{
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transition: all 0.35s;
+  transition: all 0.50s;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,118,255,0.6348739324831495) 100%);
+}
+

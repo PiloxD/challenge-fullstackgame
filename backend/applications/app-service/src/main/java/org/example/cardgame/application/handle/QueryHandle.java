@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -51,6 +52,18 @@ public class QueryHandle {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .body(BodyInserters.fromPublisher(Mono.just(element), TableroViewModel.class)))
         );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> getGames() {
+        return RouterFunctions.route(
+                GET("/juegos/"),
+                serverRequest -> template.findAll(JuegoListViewModel.class, "gameview")
+                        .collectList()
+                        .flatMap(games -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Flux.fromIterable(games),
+                                        JuegoListViewModel.class))));
+
     }
 
     @Bean

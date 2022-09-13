@@ -8,7 +8,8 @@ import org.example.cardgame.usecase.gateway.JuegoDomainEventRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class IniciarRondaUseCase extends UseCaseForCommand<IniciarRondaCommand> {
+public class
+IniciarRondaUseCase extends UseCaseForCommand<IniciarRondaCommand> {
 
     private final JuegoDomainEventRepository repository;
 
@@ -17,14 +18,12 @@ public class IniciarRondaUseCase extends UseCaseForCommand<IniciarRondaCommand> 
     }
 
     @Override
-    public Flux<DomainEvent> apply(Mono<IniciarRondaCommand> iniciarJuegoCommand) {
-        return iniciarJuegoCommand.flatMapMany((command) -> repository
-                .obtenerEventosPor(command.getJuegoId())
-                .collectList()
-                .flatMapIterable(events -> {
-                    var juego = Juego.from(JuegoId.of(command.getJuegoId()), events);
-                    juego.iniciarRonda();
-                    return juego.getUncommittedChanges();
-                }));
+    public Flux<DomainEvent> apply(Mono<IniciarRondaCommand> iniciarRondaCommand) {
+        return iniciarRondaCommand.flatMapMany(comando -> repository.obtenerEventosPor(
+                comando.getJuegoId()).collectList().flatMapIterable(evento -> {
+            var juego = Juego.from(JuegoId.of(comando.getJuegoId()), evento);
+            juego.iniciarRonda();
+            return juego.getUncommittedChanges();
+        }));
     }
 }

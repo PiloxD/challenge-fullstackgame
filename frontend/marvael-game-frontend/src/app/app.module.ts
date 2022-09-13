@@ -8,25 +8,23 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { LoginComponent } from './pages/login/login.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NewGameComponent } from './pages/new-game/newgame.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { GameListComponent } from './pages/gamelist/gamelist.component';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrimeNgModule } from './component/prime-ng.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent,
-    NewGameComponent,
-    DashboardComponent,
-    GameListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    RouterModule,
+    BrowserAnimationsModule,
+    PrimeNgModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())

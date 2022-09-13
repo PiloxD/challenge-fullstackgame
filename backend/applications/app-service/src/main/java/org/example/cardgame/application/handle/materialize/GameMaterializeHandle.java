@@ -1,8 +1,8 @@
 package org.example.cardgame.application.handle.materialize;
 
 import co.com.sofka.domain.generic.DomainEvent;
-
 import co.com.sofka.domain.generic.Identity;
+import java.util.stream.Collectors;
 import org.bson.Document;
 import org.example.cardgame.domain.events.*;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +11,10 @@ import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.time.Instant;
 import java.util.HashMap;
-import java.util.stream.Collectors;
 
-@EnableAsync
 @Configuration
 public class GameMaterializeHandle {
     private static final String COLLECTION_VIEW = "gameview";
@@ -27,7 +24,6 @@ public class GameMaterializeHandle {
     public GameMaterializeHandle(ReactiveMongoTemplate template) {
         this.template = template;
     }
-
 
     @EventListener
     public void handleJuegoCreado(JuegoCreado event) {
@@ -42,13 +38,12 @@ public class GameMaterializeHandle {
         template.save(data, COLLECTION_VIEW).block();
     }
 
-
     @EventListener
     public void handleJugadorAgregado(JugadorAgregado event) {
         var data = new Update();
         data.set("fecha", Instant.now());
-        data.set("jugadores."+event.getJuegoId().value()+".alias", event.getAlias());
-        data.set("jugadores."+event.getJuegoId().value()+".jugadorId", event.getJuegoId().value());
+        data.set("jugadores."+event.getJugadorId().value()+".alias", event.getAlias());
+        data.set("jugadores."+event.getJugadorId().value()+".jugadorId", event.getJugadorId().value());
         data.inc("cantidadJugadores");
         template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
     }
@@ -105,53 +100,10 @@ public class GameMaterializeHandle {
         template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
     }
 
-    @EventListener
-    public void handleTiempoCambiadoDelTablero(TiempoCambiadoDelTablero event){
-        var data = new Update();
-        data.set("fecha", Instant.now());
-        data.set("tiempo", event.getTiempo());
-        data.set("ronda.estaIniciada", true);
-
-        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
-    }
-
-    @EventListener
-    public void handleRondaTerminada(RondaTerminada event){
-        var data = new Update();
-        data.set("fecha", Instant.now());
-        data.set("tiempo", 0);
-        data.set("ronda.estaIniciada", false);
-        data.set("tablero.cartas", new HashMap<>());
-        data.set("tablero.habilitado", false);
-        data.set("ronda.jugadores", event.getJugadorIds());
-
-        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
-    }
-
-    @EventListener
-    public void handleRondaIniciada(RondaIniciada event){
-        var data = new Update();
-        data.set("fecha", Instant.now());
-        data.set("tablero.habilitado", true);
-
-        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
-    }
-
-    @EventListener
-    public void handleJuegoFinalizado(JuegoFinalizado event){
-        var data = new Update();
-        data.set("fecha", Instant.now());
-        data.set("ganador.alias", event.getAlias());
-        data.set("ganador.jugadorId", event.getJugadorId().value());
-        data.set("finalizado", true);
-
-        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
-    }
-
-
     private Query getFilterByAggregateId(DomainEvent event) {
         return new Query(
                 Criteria.where("_id").is(event.aggregateRootId())
         );
     }
+
 }

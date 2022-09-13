@@ -1,8 +1,17 @@
-
-.navbar{
-  display: flex;
-  justify-content: center;
+.navbar {
   background-color: rgb(215, 221, 221);
   font-style: italic;
+  flex-direction: row;
 
+}
+
+.iconos {
+  width: 3%;
+}
+
+.icontext{
+  display: grid;
+  place-content: center;
+  flex-direction: row;
+  text-align: center;
 }

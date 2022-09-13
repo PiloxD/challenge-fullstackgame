@@ -10,7 +10,6 @@ import org.example.cardgame.usecase.gateway.JuegoDomainEventRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CrearRondaUseCase extends UseCaseForCommand<CrearRondaCommand> {
@@ -22,24 +21,23 @@ public class CrearRondaUseCase extends UseCaseForCommand<CrearRondaCommand> {
     }
 
     @Override
-    public Flux<DomainEvent> apply(Mono<CrearRondaCommand> iniciarJuegoCommand) {
-        return iniciarJuegoCommand.flatMapMany((command) -> repository
-                .obtenerEventosPor(command.getJuegoId())
-                .collectList()
-                .flatMapIterable(events -> {
-                    var juego = Juego.from(JuegoId.of(command.getJuegoId()), events);
-                    var jugadores = command.getJugadores().stream()
-                            .map(JugadorId::of)
-                            .collect(Collectors.toSet());
+    public Flux<DomainEvent> apply(Mono<CrearRondaCommand> crearRondaCommandMono) {
+        return crearRondaCommandMono.flatMapMany((comando) ->
+                repository
+                        .obtenerEventosPor(comando.getJuegoId()).collectList()
+                        .flatMapIterable(event -> {
+                            var juego = Juego.from(JuegoId.of(comando.getJuegoId()), event);
+                            var jugadores = comando.getJugadores().stream()
+                                    .map(JugadorId::of).collect(Collectors.toSet());
 
-                    Optional.ofNullable(juego.ronda())
-                            .ifPresentOrElse(
-                                    ronda -> juego.crearRonda(
-                                            ronda.incrementarRonda(jugadores), command.getTiempo()
-                                    ), () -> juego.crearRonda(
-                                            new Ronda(1, jugadores), command.getTiempo())
-                            );
-                    return juego.getUncommittedChanges();
-                }));
+                            if (juego.ronda() == null) {
+                                juego.crearRonda(new Ronda(1,jugadores), comando.getTiempo());
+                            }
+                            juego.ronda().incrementarRonda(jugadores);
+
+                            return juego.getUncommittedChanges();
+
+                        })
+        );
     }
 }

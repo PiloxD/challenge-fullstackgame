@@ -1,0 +1,15 @@
+$primary-color: rgb(185 28 28);
+.game-card {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  padding-top: 100px;
+}
+
+.p-element .p-fieldset-toggleable .p-fieldset-legend {
+  background-color: $primary-color !important;
+}
+
+.p-element .p-fieldset-expanded .p-fieldset-legend {
+  background-color: $primary-color !important;
+}
