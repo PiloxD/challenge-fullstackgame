@@ -1,11 +1,21 @@
 .cuadro{
   text-align: left;
 }
-.card-body{
-  padding: 10%;
+.cont{
+  border: solid;
+  border-radius: 3px;
 }
+
 .titulo{
   text-align: center;
+}
+.customProgress .ui-progressbar .ui-progressbar-value{
+  background-color: rgb(185 28 28);
+  color: white;
+}
+
+.p-progressbar .p-progressbar-value {
+  background: rgb(185 28 28) !important;
 }
 
 .btn{

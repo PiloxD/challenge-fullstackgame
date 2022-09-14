@@ -54,6 +54,31 @@ public class QueryHandle {
         );
     }
     @Bean
+    public RouterFunction<ServerResponse> getBoardById() {
+        return RouterFunctions.route(
+                GET("/tablero/{juegoId}"),
+                request -> template.findOne(filterById(request.pathVariable("juegoId")
+                        ),TableroViewModel.class,"tableroview")
+                        .flatMap(board->ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Mono.just(board),TableroViewModel.class)))
+        );
+    }
+    /*
+    @Bean
+    public RouterFunction<ServerResponse> mazoPorJugador() {
+        return RouterFunctions.route(
+                GET("/mazo/{jugadorId}/{juegoId}"),
+                request -> template.findOne(filterByJugadorIdAndJuegoId(request.pathVariable("jugadorId"),
+                                        request.pathVariable("juegoId")), MazoViewModel.class,
+                                "mazoview")
+                        .flatMap(list -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Mono.just(list), MazoViewModel.class)))
+        );
+    }
+     */
+    @Bean
     public RouterFunction<ServerResponse> getGames() {
         return RouterFunctions.route(
                 GET("/juegos/"),

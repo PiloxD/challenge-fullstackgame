@@ -7,12 +7,12 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
   providedIn: 'root',
 })
 export class WebsocketService {
-  private BASE_URL: string = 'ws://localhost:8081/retrieve';
+  private URL: string = 'ws://localhost:8081/retrieve';
   private socket!: WebSocketSubject<unknown>;
   constructor() {}
 
   conect(idGame: string): Observable<WebSocketSubject<unknown>> {
-    this.socket = webSocket(`${this.BASE_URL}/${idGame}`);
+    this.socket = webSocket(`${this.URL}/${idGame}`);
     return this.socket as Observable<WebSocketSubject<unknown>>;
   }
   close() {

@@ -1,12 +1,13 @@
-export interface Board {
-  round: Round;
-  playerQuantity: number;
-  initPlayers: string[];
+export interface Dashboard {
+  ronda: Round;
+  cantidadJugadores: number;
+  jugadoresIniciales: string[];
+  jugadorPrincipalId: String
 }
 
 export interface Round {
-  time: number;
-  players: string[];
-  number: string;
-  isInit: boolean;
+  tiempo: number;
+  jugadores: string[];
+  numero: string;
+  estaIniciada: boolean;
 }

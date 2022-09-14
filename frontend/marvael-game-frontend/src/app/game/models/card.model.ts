@@ -1,7 +1,7 @@
 export interface Card {
-  cardId: string;
-  isHidden: boolean;
-  isEnable: boolean;
-  power: number;
-  uri: string;
+  cartaId:        string;
+  estaOculta:     boolean;
+  estaHabilitada: boolean;
+  poder:          number;
+  uri:            string;
 }

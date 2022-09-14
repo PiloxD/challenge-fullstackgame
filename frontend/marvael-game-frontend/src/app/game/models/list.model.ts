@@ -2,8 +2,8 @@ import { Card } from "./card.model";
 
 
 export interface List {
-  quantity: number;
-  cards: Card[];
-  gameId: string;
-  playerId: string;
+  cantidad: number;
+  cartas: Card[];
+  juegoId: string;
+  jugadorId: string;
 }

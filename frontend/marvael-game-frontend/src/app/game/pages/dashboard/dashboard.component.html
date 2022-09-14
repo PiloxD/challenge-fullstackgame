@@ -1,22 +1,76 @@
-<div class="cont">
-  <div class="boxInfo">
-    <div class="topBox">Ronda</div>
+<div class="board-card">
+  <div class="container">
+    <h1 class="text-center m-0">Round {{ board?.ronda?.numero }}</h1>
 
-    <h6>Ronda #1</h6>
-    <h6>Jugadores 5/5</h6>
-    <h6>Tiempo 50seg</h6>
+    <div class="grid m-0">
+      <div class="col-12 md:col-8">
+        <div
+          class="surface-card p-4 shadow-2 border-round m-0 opacity-80"
+          style="height: 100%"
+        >
+          <div
+            class="text-3xl font-medium text-900 mb-3 flex flex-wrap justify-content-evenly text-center"
+          >
+            <span class="mr-2 mt-2">
+              Players {{ board?.ronda?.jugadores?.length }} /
+              {{ board?.cantidadJugadores }} </span
+            >
+            <span class="mr-2 mt-2">Tiempo {{ board?.ronda?.tiempo }} </span>
+            <span class="mr-2 mt-2"
+              ><button
+                (click)="initGame()"
+                style="max-height: 50px"
+                class="btn-game mr-2"
+                [disabled]="!isMainPlayer"
+              >
+                Init roun <i class="pi pi-power-off ml-2"></i></button
+            ></span>
+          </div>
+          <div class="font-medium text-500 mb-3"></div>
+          <div class="border-2 border-dashed surface-border p-2">
+            <div  class="flex flex-wrap justify-content-evenly">
+                <div *ngFor="let player of board?.ronda?.jugadores" class="bet-card p-3">
+                  <img src="../../../../assets/portrait_uncanny.jpg" alt="">
+                </div>
 
-    <div class="px"></div>
-
-    <div class="px"></div>
-    <button class="btn">Iniciar</button>
-  </div>
-
-  <div class="mazo">
-    <div class="">Cartas</div>
-
-    <div class="px2"></div>
-
-    <div class="px2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col md:col-4">
+        <div
+          class="surface-card p-4 shadow-2 border-round m-0 opacity-80"
+          style="height: 100%"
+        >
+          <div class="text-3xl font-medium text-900 mb-3">Deck</div>
+          <div class="font-medium text-500 mb-3"></div>
+          <div
+            class="border-2 border-dashed surface-border flex flex-wrap justify-content-evenly p-2"
+          >
+            <div *ngFor="let card of list?.cartas">
+              <div class="container-image">
+                <img
+                  class="img-hero"
+                  [src]="card.uri"
+                  alt="Image"
+                  width="250"
+                />
+              </div>
+              <div
+                class="container-btn flex justify-content-between align-items-center"
+              >
+                <p><span class="text-900">Power: </span>{{ card.poder }}</p>
+                <button
+                  [disabled]="!board?.ronda?.estaIniciada"
+                  class="btn-board"
+                >
+                  Bet
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

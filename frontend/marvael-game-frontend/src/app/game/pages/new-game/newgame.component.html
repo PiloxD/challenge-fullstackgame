@@ -14,14 +14,14 @@
           <p-listbox
             [options]="users"
             formControlName="user"
-            aria-placeholder="Search user"
+            aria-placeholder="Buscar jugador"
             [metaKeySelection]="true"
             [checkbox]="true"
             [filter]="true"
             [multiple]="true"
             optionLabel="displayName"
             [listStyle]="{ 'max-height': '250px' }"
-            filterPlaceHolder="Search user"
+            filterPlaceHolder="Buscar jugador"
             filterBy="displayName, email"
             optionDisabled="disable"
           >
@@ -32,7 +32,7 @@
                 <div class="flex align-items-center">
                   <div class="ml-2">
                     {{ user.displayName | titlecase }}
-                    <span *ngIf="user.onLine && user.disable">(In a game)</span>
+                    <span *ngIf="user.onLine && user.disable">(Jugando)</span>
                   </div>
                 </div>
                 <div class="flex align-items-center">
@@ -49,7 +49,7 @@
             type="submit"
             class="btn"
           >
-            Create game
+            Crear juego nuevo
           </button>
         </form>
       </div>
