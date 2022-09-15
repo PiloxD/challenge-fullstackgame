@@ -2,72 +2,32 @@ package org.example.cardgame.application.handle.model;
 
 import java.util.Objects;
 import java.util.Set;
+import lombok.Data;
 
+@Data
 public class MazoViewModel {
     private Integer cantidad;
     private Set<Carta> cartas;
-
-    public void setCartas(Set<Carta> cartas) {
-        this.cartas = cartas;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public Set<Carta> getCartas() {
-        return cartas;
-    }
-
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
+    private String juegoId;
+    private String jugadorId;
+    @Data
     public static class Carta {
         private  String cartaId;
-        private  String jugadorId;
         private  Boolean estaOculta;
         private  Boolean estaHabilitada;
         private  Integer poder;
+        private String uri;
 
-        public String getCartaId() {
-            return cartaId;
-        }
-
-        public void setCartaId(String cartaId) {
+        public Carta(String cartaId, Boolean estaOculta, Boolean estaHabilitada, Integer poder,
+                     String url) {
             this.cartaId = cartaId;
-        }
-
-        public Boolean getEstaOculta() {
-            return estaOculta;
-        }
-
-        public void setEstaOculta(Boolean estaOculta) {
             this.estaOculta = estaOculta;
-        }
-
-        public Boolean getEstaHabilitada() {
-            return estaHabilitada;
-        }
-
-        public void setPoder(Integer poder) {
-            this.poder = poder;
-        }
-
-        public Integer getPoder() {
-            return poder;
-        }
-
-        public void setEstaHabilitada(Boolean estaHabilitada) {
             this.estaHabilitada = estaHabilitada;
+            this.poder = poder;
+            this.uri = uri;
         }
 
-        public String getJugadorId() {
-            return jugadorId;
-        }
-
-        public void setJugadorId(String jugadorId) {
-            this.jugadorId = jugadorId;
+        public Carta() {
         }
 
         @Override

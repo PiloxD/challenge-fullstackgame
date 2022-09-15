@@ -1,14 +1,13 @@
 package org.example.cardgame.application.handle;
 
 import co.com.sofka.domain.generic.DomainEvent;
+import java.util.function.Function;
 import org.example.cardgame.application.generic.EventBus;
 import org.example.cardgame.application.generic.EventStoreRepository;
 import org.example.cardgame.application.generic.StoredEvent;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.function.Function;
 
 @Component
 public class IntegrationHandle implements Function<Flux<DomainEvent>, Mono<Void> > {

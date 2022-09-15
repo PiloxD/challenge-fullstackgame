@@ -54,19 +54,19 @@ public class SocketController {
 
     public void send(String correlationId, DomainEvent event) {
 
-            var message =serialize.serialize(event);
-            if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
-                logger.info("send from " + correlationId);
+        var message =serialize.serialize(event);
+        if (Objects.nonNull(correlationId) && sessions.containsKey(correlationId)) {
+            logger.info("send from " + correlationId);
 
-                sessions.get(correlationId).values()
-                        .forEach(session -> {
-                            try {
-                                session.getAsyncRemote().sendText(message);
-                            } catch (RuntimeException e){
-                                logger.log(Level.SEVERE, e.getMessage(), e);
-                            }
-                        });
-            }
+            sessions.get(correlationId).values()
+                    .forEach(session -> {
+                        try {
+                            session.getAsyncRemote().sendText(message);
+                        } catch (RuntimeException e){
+                            logger.log(Level.SEVERE, e.getMessage(), e);
+                        }
+                    });
+        }
 
 
     }

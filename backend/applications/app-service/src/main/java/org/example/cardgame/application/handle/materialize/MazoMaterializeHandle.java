@@ -1,19 +1,15 @@
 package org.example.cardgame.application.handle.materialize;
 
-import co.com.sofka.domain.generic.DomainEvent;
+import java.time.Instant;
+import org.bson.Document;
 import org.example.cardgame.domain.events.JugadorAgregado;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-
-import java.time.Instant;
-import java.util.HashMap;
 
 @Configuration
 public class MazoMaterializeHandle {
+
     private static final String COLLECTION_VIEW = "mazoview";
 
     private final ReactiveMongoTemplate template;
@@ -23,18 +19,18 @@ public class MazoMaterializeHandle {
     }
 
 
-
     @EventListener
     public void handleJugadorAgregado(JugadorAgregado event) {
+        var mazo = event.getMazo();
+        var data = new Document();
+        var cartas = mazo.value().cartas();
+        data.put("juegoId", event.aggregateRootId());
+        data.put("cantidad", event.getMazo().value().cantidad());
+        data.put("fecha", Instant.now());
+        data.put("jugadorId", event.getJugadorId().value());
 
-        event.getMazo();
-
-    }
-
-    private Query getFilterByAggregateId(DomainEvent event) {
-        return new Query(
-                Criteria.where("_id").is(event.aggregateRootId())
-        );
+        data.put("cartas", cartas);
+        template.save(data, COLLECTION_VIEW).block();
     }
 
 }

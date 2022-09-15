@@ -38,31 +38,32 @@ export class DashboardComponent implements OnInit {
         })
       )
       .subscribe(() => {
-        console.log(this.gameId);
+        console.log("game id: ",this.gameId);
       });
 
     this.websocketService.conect(this.gameId).subscribe((res) => {
-      console.log(res);
+      console.log("WEBSOCKET: ",res);
     });
-    // this.getDeckPlayer();
+    this.getDeckPlayer();
     this.getBoardId();
   }
 
-  // getDeckPlayer() {
-  //   this.gameServices.getListByPlayer(this.userId, this.gameId).subscribe({
-  //     next: (res) => {
-  //       this.list = res;
-  //     },
-  //   });
-  // }
-
+  getDeckPlayer() {
+    this.gameServices.getListByPlayer(this.userId, this.gameId).subscribe({
+      next: (res) => {
+        this.list = res;
+      },
+    });
+  }
   getBoardId() {
     this.gameServices.getBoard(this.gameId).subscribe({
       next: (res) => {
         if (res) {
           this.isMainPlayer = res.jugadorPrincipalId == this.userId;
           this.board = res;
+          console.log("IF EN USO...")
         } else {
+          console.log("ACTIVANDO ELSE...")
           this.router.navigate(['/gamelist']);
         }
       },
@@ -72,7 +73,7 @@ export class DashboardComponent implements OnInit {
   initGame() {
     this.gameServices.startGame({ juegoId: this.gameId }).subscribe({
       next: (res) => {
-        console.log(res);
+        console.log("Init game: ",res);
       },
       error: (err) => {
         console.log(err);
