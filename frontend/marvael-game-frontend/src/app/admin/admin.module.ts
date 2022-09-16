@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GameModule } from '../game/game.module';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './page/admin.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminComponent],
@@ -11,6 +11,7 @@ import { AdminComponent } from './page/admin.component';
     CommonModule,
     AdminRoutingModule,
     GameModule,
+    FormsModule
   ],
 
 })

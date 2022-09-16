@@ -11,6 +11,7 @@ import { ImageModule } from 'primeng/image';
 import { DividerModule } from 'primeng/divider';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 
+
 @NgModule({
   declarations: [],
   exports: [

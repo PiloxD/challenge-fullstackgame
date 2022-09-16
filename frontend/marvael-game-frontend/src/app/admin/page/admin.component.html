@@ -1,7 +1,36 @@
 <div class="admincont">
+  <div class="login-box" *ngIf=" test">
+    <h2>CREAR CARTA</h2>
+    <form (ngSubmit)="create(body)">
+      <div class="user-box">
+        <input type="number" [(ngModel)]="card.id" name="1" required="">
+        <label>Id</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="2" [(ngModel)]="card.nombre"required="">
+        <label>Nombre</label>
+      </div>
+      <div class="user-box">
+        <input type="text" name="3"[(ngModel)]="card.uri" required="">
+        <label>Dirreción URL de la imagen</label>
+      </div>
+      <div class="user-box">
+        <input type="number" name="4"[(ngModel)]="card.poder" required="">
+        <label>Poder</label>
+      </div>
+      <button type="submit">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        CREAR
+      </button>
+    </form>
+  </div>
   <h1 class="leaderboard__title">
     <span class="leaderboard__title--top"> ADMINISTRADOR </span>
   </h1>
+  <button (click)="changeTest()">CREAR CARTA</button>
   <div class="itemdiv">
     <main class="leaderboard__profiles">
       <div *ngFor="let item of cards">

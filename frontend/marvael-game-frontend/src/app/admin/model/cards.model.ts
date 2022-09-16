@@ -1,4 +1,4 @@
-export interface Cards {
+export class Cards {
   id: number;
   nombre: string;
   uri: string;

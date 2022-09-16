@@ -10,9 +10,14 @@ export class AdminService {
   private URL: string = 'http://localhost:8080';
   constructor(private http: HttpClient) {}
 
-  getGames(): Observable<Cards[]> {
+  getCards(): Observable<Cards[]> {
     return this.http.get<Cards[]>(`${this.URL}/cards`);
   }
-
+  createCards(body: any) {
+    return this.http.post(`${this.URL}/card/create`, body);
+  }
+  deleteCard(nombre: string){
+    return this.http.delete(`${this.URL}/card/delete/${nombre}`);
+  }
 
 }
