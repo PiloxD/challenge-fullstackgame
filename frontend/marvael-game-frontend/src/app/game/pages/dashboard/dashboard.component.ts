@@ -128,7 +128,6 @@ export class DashboardComponent implements OnInit {
   }
   putCardAFK() {
     let cardRng = this.list[1][0]
-    console.log("CARD RNG>:",cardRng)
     this.gameServices.putCard(this.userId, cardRng, this.gameId).subscribe({
       next: (res) => {
         console.log(res);
