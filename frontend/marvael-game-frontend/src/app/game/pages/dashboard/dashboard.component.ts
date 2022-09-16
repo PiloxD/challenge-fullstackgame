@@ -61,11 +61,11 @@ export class DashboardComponent implements OnInit {
       next: (message) => {
         switch (message.type) {
           case 'cardgame.rondacreada':
-            console.log('cartas nuevas yuju!');
             this.getDeckPlayer();
             this.cartasTablero = new Array();
             break;
           case 'cardgame.tiempocambiadodeltablero':
+            console.log("PRUEBA: ", this.list.cartas[0].cartaId);
             if ((message.tiempo == 4) && (this.cartasTablero.length == 0) ) {
               this.putCardAFK();
             }
@@ -127,8 +127,8 @@ export class DashboardComponent implements OnInit {
     });
   }
   putCardAFK() {
-    let cardRng = this.list[1][0]
-    this.gameServices.putCard(this.userId, cardRng, this.gameId).subscribe({
+    let cardRng = this.list.cartas[0]
+    this.gameServices.putCard(this.userId, cardRng.cartaId, this.gameId).subscribe({
       next: (res) => {
         console.log(res);
       },
