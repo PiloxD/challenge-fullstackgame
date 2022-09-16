@@ -1,13 +1,22 @@
-<div class="cont">
-<h1 class="leaderboard__title"><span class="leaderboard__title--top"></span><span class="leaderboard__title--bottom">CARTAS</span></h1>
-<main class="leaderboard__profiles">
-  <div *ngFor="let item of cards;">
-    <article class="leaderboard__profile">
-      <img [src]="item.uri" alt="Mark Zuckerberg" class="leaderboard__picture">
-      <span class="leaderboard__name">{{item.nombre}}</span>
-      <button>EDITAR</button>
-      <span class="leaderboard__value">{{item.poder}}</span>
-    </article>
+<div class="admincont">
+  <h1 class="leaderboard__title">
+    <span class="leaderboard__title--top"> ADMINISTRADOR </span>
+  </h1>
+  <div class="itemdiv">
+    <main class="leaderboard__profiles">
+      <div *ngFor="let item of cards">
+        <button>
+          <article class="leaderboard__profile">
+            <img
+              [src]="item.uri"
+              alt="Mark Zuckerberg"
+              class="leaderboard__picture"
+            />
+            <span class="leaderboard__name">{{ item.nombre }}</span>
+            <span class="leaderboard__value">{{ item.poder }}</span>
+          </article>
+        </button>
+      </div>
+    </main>
   </div>
-</main>
 </div>

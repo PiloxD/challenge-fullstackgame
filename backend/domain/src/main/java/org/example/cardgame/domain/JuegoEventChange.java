@@ -6,11 +6,7 @@ import java.util.HashSet;
 
 import org.example.cardgame.domain.events.*;
 
-import co.com.sofka.domain.generic.EventChange;
-import org.example.cardgame.domain.events.*;
-
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Objects;
 
 /**
@@ -39,6 +35,7 @@ public class JuegoEventChange extends EventChange {
         apply((TableroCreado event) -> {
             juego.tablero = new Tablero(event.getTableroId(), event.getJugadorIds());
         });
+
 
         apply((TiempoCambiadoDelTablero event) -> {
             juego.tablero.ajustarTiempo(event.getTiempo());

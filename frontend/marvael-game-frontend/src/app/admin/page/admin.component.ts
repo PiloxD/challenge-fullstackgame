@@ -20,13 +20,11 @@ cards: Cards[] = [];
 
   ngOnInit(): void {
     this.getAllCards()
-    console.log()
   }
 
   getAllCards(){
     this.adminService.getGames().subscribe({
       next: (resp) => {
-        console.log("cards: ", resp)
         this.cards = resp;
       }
     })};

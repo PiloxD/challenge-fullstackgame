@@ -22,6 +22,7 @@
       text-transform: uppercase;
       margin: 0;
 
+
       span {
         display: block;
       }
@@ -30,6 +31,7 @@
         font-size: 24px;
         font-weight: 700;
         letter-spacing: 6.5px;
+
       }
 
       &--bottom {
@@ -121,4 +123,14 @@ body {
 
 .leaderboard {
   box-shadow: 0 0 40px -10px rgba(0, 0, 0, .4);
+}
+.admincont{
+  width: 100%;
+  display: grid;
+  justify-content: center;
+}
+.itemdiv{
+  width: 100%;
+  display: grid;
+  justify-content: center;
 }

@@ -2,12 +2,12 @@ package org.example.cardgame.application.handle;
 
 
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
-
 import org.example.cardgame.application.handle.model.CardListViewModel;
 import org.example.cardgame.application.handle.model.JuegoListViewModel;
 import org.example.cardgame.application.handle.model.MazoViewModel;
 import org.example.cardgame.application.handle.model.TableroViewModel;
+import org.example.cardgame.domain.command.CrearJuegoCommand;
+import org.example.cardgame.usecase.usecase.CrearJuegoUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -19,6 +19,8 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -64,7 +66,25 @@ public class QueryHandle {
                                 .body(BodyInserters.fromPublisher(Flux.fromIterable(list), CardListViewModel.class)))
         );
     }
+    @Bean
+    public RouterFunction<ServerResponse> createCard() {
+        return route(
+                POST("/card/create").and(accept(MediaType.APPLICATION_JSON)),
+                request -> template.save(request.bodyToMono(CardListViewModel.class), "cards")
+                    .then(ServerResponse.ok().build())
+        );
+    }
+    /*
+    @Bean
+    public RouterFunction<ServerResponse> updateCard() {
+        return route(
+                PUT("/card/update/{name}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> template.findAndModify((filterCardByName(request.pathVariable("nombre"))), request.bodyToMono(CardListViewModel.class), "cards")
+                        .then(ServerResponse.ok().build())
+        );
+    }
 
+*/
 
     @Bean
     public RouterFunction<ServerResponse> getTablero() {
@@ -74,6 +94,16 @@ public class QueryHandle {
                         .flatMap(element -> ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .body(BodyInserters.fromPublisher(Mono.just(element), TableroViewModel.class)))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> deleteCard() {
+        return route(
+                DELETE("/card/delete/{nombre}"),
+                request -> template.findAndRemove(filterCardByName(request.pathVariable("nombre")), CardListViewModel.class, "cards")
+                        .flatMap(element -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Mono.just(element), CardListViewModel.class)))
         );
     }
 
@@ -98,6 +128,11 @@ public class QueryHandle {
     private Query filterById(String juegoId) {
         return new Query(
                 Criteria.where("_id").is(juegoId)
+        );
+    }
+    private Query filterCardByName(String nombre) {
+        return new Query(
+                Criteria.where("nombre").is(nombre)
         );
     }
 

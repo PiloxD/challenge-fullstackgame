@@ -87,6 +87,7 @@ public class Juego extends AggregateEvent<JuegoId> {
         appendChange(new RondaCreada(ronda, tiempo)).apply();
     }
 
+
     /**
      * Cambiar tiempo del tablero.
      *
