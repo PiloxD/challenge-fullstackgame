@@ -1,79 +1,35 @@
 <div class="cont">
-  <div class="board-card">
-    <div class="container">
-      <h1 class="text-center m-0">Ronda {{ board?.ronda?.numero }}</h1>
+  <div class="boxInfo">
+    <div class="topBox">
+      <h2>Ronda {{ board?.ronda?.numero }}</h2>
+    </div>
 
-      <div class="grid m-0">
-        <div class="col-12 md:col-8">
-          <div
-            class="surface-card p-4 shadow-2 border-round m-0 opacity-80"
-            style="height: 100%"
-          >
-            <div
-              class="text-3xl font-medium text-900 mb-3 flex flex-wrap justify-content-evenly text-center"
-            >
-              <span class="mr-2 mt-2">
-                Jugadores {{ board?.ronda?.jugadores?.length }} /
-                {{ board?.cantidadJugadores }}
-              </span>
-              <span class="mr-2 mt-2">Tiempo {{ board?.ronda?.tiempo }} </span>
-              <span class="mr-2 mt-2"
-                ><button
-                  (click)="initGame()"
-                  style="max-height: 50px"
-                  class="btn-game mr-2"
-                  [disabled]="!isMainPlayer"
-                >
-                  Iniciar <i class="pi pi-power-off ml-2"></i></button
-              ></span>
-            </div>
-            <div class="font-medium text-500 mb-3"></div>
-            <div class="border-2 border-dashed surface-border p-2">
-              <div class="flex flex-wrap justify-content-evenly">
-                <div
-                  *ngFor="let player of board?.ronda?.jugadores"
-                  class="bet-card p-3"
-                >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col md:col-4">
-          <div
-            class="surface-card p-4 shadow-2 border-round m-0 opacity-80"
-            style="height: 100%"
-          >
-            <div class="text-3xl font-medium text-900 mb-3">Deck</div>
-            <div class="font-medium text-500 mb-3"></div>
-            <div
-              class="border-2 border-dashed surface-border flex flex-wrap justify-content-evenly p-2"
-            >
-              <div *ngFor="let card of list?.cartas">
-                <div class="container-image">
-                  <img
-                    class="img-hero"
-                    [src]="card.uri"
-                    alt="Image"
-                    width="250"
-                  />
-                </div>
-                <div
-                  class="container-btn flex justify-content-between align-items-center"
-                >
-                  <p><span class="text-900">Poder: </span>{{ card.poder }}</p>
-                  <button
-                    [disabled]="!board?.ronda?.estaIniciada"
-                    class="btn-board"
-                  >
-                    APOSTAR
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="topBox">
+      <div>
+        <h6>Jugadores: {{ board?.ronda?.jugadores?.length }}</h6>
+        <h6>Tiempo: {{ board?.ronda?.tiempo }}</h6>
       </div>
     </div>
+
+    <div class="px2"></div>
+
+    <div class="px2"></div>
+    <button class="btn" (click)="initGame()">Iniciar</button>
+  </div>
+
+  <div class="mazo">
+    <div class="topBox">Cartas</div>
+
+    <div class="l-container">
+      <div class="b-game-card"  *ngFor="let card of list?.cartas">
+        <button class="apostarbtn"  (click)="ponerCarta(card.cartaId)">
+        <div class="b-game-card__cover">
+          <img [src]="card.jugadorId" alt="Image" width="100%" />
+          <h4 >{{ card.poder }}</h4>
+        </div>
+      </button>
+      </div>
+    </div>
+    <button class="btn" (click)="getDeckPlayer()">Traer cartas</button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import co.com.sofka.domain.generic.DomainEvent;
 import org.example.cardgame.domain.values.JugadorId;
 import org.example.cardgame.domain.values.Mazo;
 
+
 public class JugadorAgregado extends DomainEvent {
     private final JugadorId identity;
     private final String alias;
@@ -14,6 +15,10 @@ public class JugadorAgregado extends DomainEvent {
         this.identity = identity;
         this.alias = alias;
         this.mazo = mazo;
+    }
+
+    public JugadorId getJuegoId() {
+        return identity;
     }
 
     public JugadorId getJugadorId() {

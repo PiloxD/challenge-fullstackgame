@@ -1,5 +1,6 @@
 package org.example.cardgame.application.handle.usecase;
 
+
 import co.com.sofka.domain.generic.Identity;
 
 import org.example.cardgame.application.handle.IntegrationHandle;
@@ -37,7 +38,7 @@ public class CrearRondaEventHandle {
                 .map(Identity::value)
                 .collect(Collectors.toSet());
         command.setJuegoId(event.aggregateRootId());
-        command.setTiempo(60);
+        command.setTiempo(10);
         command.setJugadores(jugadores);
         handle.apply(usecase.apply(Mono.just(command))).block();
     }

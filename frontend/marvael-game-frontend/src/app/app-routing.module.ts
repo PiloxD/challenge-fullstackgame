@@ -18,6 +18,11 @@ const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: '',
+    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    ...canActivate(() => redirectUnauthorizedTo(['/admin'])),
+  },
+  {
     path: '**',
     redirectTo: "/login",
   },

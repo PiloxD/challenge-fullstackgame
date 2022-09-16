@@ -13,21 +13,15 @@ public class Carta implements ValueObject<Carta.Props>, Comparable<Carta> {
     private final Boolean estaOculta;
     private final Boolean estaHabilitada;
     private final Integer poder;
+    private final String imagen;
 
 
-    /**
-     * Instantiates a new Carta.
-     *
-     * @param cartaId        the carta id
-     * @param poder          the poder
-     * @param estaOculta     the esta oculta
-     * @param estaHabilitada the esta habilitada
-     */
-    public Carta(CartaMaestraId cartaId, Integer poder, Boolean estaOculta, Boolean estaHabilitada) {
+    public Carta(CartaMaestraId cartaId, Integer poder, Boolean estaOculta, Boolean estaHabilitada, String imagen) {
         this.cartaId = cartaId;
         this.estaOculta = estaOculta;
         this.estaHabilitada = estaHabilitada;
         this.poder = poder;
+        this.imagen = imagen;
     }
 
     @Override
@@ -52,6 +46,11 @@ public class Carta implements ValueObject<Carta.Props>, Comparable<Carta> {
             public Boolean estaHabilitada() {
                 return estaHabilitada;
             }
+
+            @Override
+            public String imagen() {
+                return imagen;
+            }
         };
     }
 
@@ -60,50 +59,25 @@ public class Carta implements ValueObject<Carta.Props>, Comparable<Carta> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Carta carta = (Carta) o;
-        return Objects.equals(cartaId, carta.cartaId) && Objects.equals(estaOculta, carta.estaOculta) && Objects.equals(estaHabilitada, carta.estaHabilitada) && Objects.equals(poder, carta.poder);
+        return Objects.equals(cartaId, carta.cartaId) && Objects.equals(estaOculta, carta.estaOculta) && Objects.equals(estaHabilitada, carta.estaHabilitada) && Objects.equals(poder, carta.poder) && Objects.equals(imagen, carta.imagen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cartaId, estaOculta, estaHabilitada, poder);
+        return Objects.hash(cartaId, estaOculta, estaHabilitada, poder, imagen);
     }
 
     @Override
     public int compareTo(Carta carta) {
-        return this.poder - carta.poder;
+        return  this.poder - carta.poder;
     }
 
 
-    /**
-     * The interface Props.
-     */
     public interface Props {
-        /**
-         * Carta id carta maestra id.
-         *
-         * @return the carta maestra id
-         */
         CartaMaestraId cartaId();
-
-        /**
-         * Poder integer.
-         *
-         * @return the integer
-         */
         Integer poder();
-
-        /**
-         * Esta oculta boolean.
-         *
-         * @return the boolean
-         */
         Boolean estaOculta();
-
-        /**
-         * Esta habilitada boolean.
-         *
-         * @return the boolean
-         */
         Boolean estaHabilitada();
+        String imagen();
     }
 }

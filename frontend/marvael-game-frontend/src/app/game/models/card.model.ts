@@ -3,5 +3,5 @@ export interface Card {
   estaOculta:     boolean;
   estaHabilitada: boolean;
   poder:          number;
-  uri:            string;
+  jugadorId:      string;
 }

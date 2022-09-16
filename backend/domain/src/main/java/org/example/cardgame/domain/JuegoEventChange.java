@@ -6,9 +6,16 @@ import java.util.HashSet;
 
 import org.example.cardgame.domain.events.*;
 
+import co.com.sofka.domain.generic.EventChange;
+import org.example.cardgame.domain.events.*;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * The type Juego event change.
+ */
 public class JuegoEventChange extends EventChange {
     public JuegoEventChange(Juego juego) {
         apply((JuegoCreado event) -> {
@@ -16,8 +23,8 @@ public class JuegoEventChange extends EventChange {
             juego.jugadorPrincipal = event.getJugadorPrincipal();
         });
         apply((JugadorAgregado event) -> {
-            juego.jugadores.put(event.getJugadorId(),
-                    new Jugador(event.getJugadorId(), event.getAlias(), event.getMazo())
+            juego.jugadores.put(event.getJuegoId(),
+                    new Jugador(event.getJuegoId(), event.getAlias(), event.getMazo())
             );
         });
 
@@ -55,7 +62,7 @@ public class JuegoEventChange extends EventChange {
         apply((RondaIniciada event) -> {
             juego.ronda = juego.ronda.iniciarRonda();
             juego.tablero.habilitarApuesta();
-            juego.tablero.partida().forEach((key,value)->juego.tablero.partida().put(key,new HashSet<>()));
+            juego.tablero.partida().forEach((key, value) -> juego.tablero.partida().put(key,new HashSet<>()));
         });
 
         apply((RondaTerminada event) -> {

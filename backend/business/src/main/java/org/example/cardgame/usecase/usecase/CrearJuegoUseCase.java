@@ -12,7 +12,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -76,7 +75,7 @@ public class CrearJuegoUseCase extends UseCaseForCommand<CrearJuegoCommand> {
         return cartasMaestras.stream()
                 .map(cartaMaestra ->
                         new Carta(CartaMaestraId.of(cartaMaestra.getId())
-                                , cartaMaestra.getPoder(), true, true))
+                                , cartaMaestra.getPoder(), true, true, cartaMaestra.getUri()))
                 .collect(Collectors.toList());
     }
 

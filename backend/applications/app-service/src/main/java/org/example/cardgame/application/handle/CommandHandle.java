@@ -4,20 +4,13 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
-import org.example.cardgame.domain.command.CrearJuegoCommand;
-import org.example.cardgame.domain.command.IniciarJuegoCommand;
-import org.example.cardgame.domain.command.IniciarRondaCommand;
-import org.example.cardgame.domain.command.PonerCartaEnTablero;
-import org.example.cardgame.usecase.usecase.CrearJuegoUseCase;
-import org.example.cardgame.usecase.usecase.IniciarJuegoUseCase;
-import org.example.cardgame.usecase.usecase.IniciarRondaUseCase;
-import org.example.cardgame.usecase.usecase.PonerCartaEnTableroUseCase;
+import org.example.cardgame.domain.command.*;
+import org.example.cardgame.usecase.usecase.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
-
 @Configuration
 public class CommandHandle {
     private final IntegrationHandle integrationHandle;
@@ -70,5 +63,13 @@ public class CommandHandle {
         );
     }
 
-
+    @Bean
+    public RouterFunction<ServerResponse> crearRonda(CrearRondaUseCase usecase) {
+        return route(
+                POST("/juego/crear/ronda").and(accept(MediaType.APPLICATION_JSON)),
+                request -> usecase.andThen(integrationHandle)
+                        .apply(request.bodyToMono(CrearRondaCommand.class))
+                        .then(ServerResponse.ok().build())
+        );
+    }
 }

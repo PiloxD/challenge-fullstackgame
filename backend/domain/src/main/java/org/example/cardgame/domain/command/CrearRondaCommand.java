@@ -4,6 +4,9 @@ import co.com.sofka.domain.generic.Command;
 
 import java.util.Set;
 
+/**
+ * The type Crear ronda command.
+ */
 public class CrearRondaCommand extends Command {
     private String juegoId;
     private Integer tiempo;

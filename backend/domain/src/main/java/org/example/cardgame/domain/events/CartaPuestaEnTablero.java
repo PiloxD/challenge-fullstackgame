@@ -5,10 +5,14 @@ import org.example.cardgame.domain.values.Carta;
 import org.example.cardgame.domain.values.JugadorId;
 import org.example.cardgame.domain.values.TableroId;
 
+/**
+ * The type Carta puesta en tablero.
+ */
 public class CartaPuestaEnTablero extends DomainEvent {
     private final TableroId tableroId;
     private final JugadorId jugadorId;
     private final Carta carta;
+
 
     public CartaPuestaEnTablero(TableroId tableroId, JugadorId jugadorId, Carta carta) {
         super("cardgame.ponercartaentablero");

@@ -11,7 +11,6 @@ import { GameModule } from '../game/game.module';
     CommonModule,
     AuthRoutingModule,
     GameModule,
-    AuthRoutingModule
   ],
 
 })

@@ -37,33 +37,52 @@ export class DashboardComponent implements OnInit {
           return this.websocketService.conect(id);
         })
       )
-      .subscribe(() => {
-        console.log("game id: ",this.gameId);
-      });
+      .subscribe(() => {});
 
-    this.websocketService.conect(this.gameId).subscribe((res) => {
-      console.log("WEBSOCKET: ",res);
-    });
+    this.websocketService.conect(this.gameId).subscribe((res) => {});
     this.getDeckPlayer();
     this.getBoardId();
   }
+  // ngOnInit(): void {
+  //   this.gameServices.getSocketInfo(this.gameId).subscribe({
+  //     next: (message: { type: any; }) => {
+  //       switch (message.type) {
+  //         case "cardgame.rondacreada":
+  //           break;
+  //         case "cardgame.tiempocambiadodeltablero":
+  //           break;
+  //         case "cardgame.ponercartaentablero":
+  //           break;
+  //         case "cardgame.juegofinalizado":
+  //           this.router.navigate([`/winner/${this.gameId}`]);
+  //           break;
+  //         default:
+  //           break;
+  //       }
+  //     },
+  //     error: () => console.log('error'),
+  //     complete: () => console.log('object'),
+  //   });
+  //   this.getDeckPlayer();
+  //   this.getBoardId();
+  // }
 
   getDeckPlayer() {
     this.gameServices.getListByPlayer(this.userId, this.gameId).subscribe({
       next: (res) => {
         this.list = res;
+        console.log('AAAA XD: ', this.list);
       },
     });
   }
+
   getBoardId() {
     this.gameServices.getBoard(this.gameId).subscribe({
       next: (res) => {
         if (res) {
           this.isMainPlayer = res.jugadorPrincipalId == this.userId;
           this.board = res;
-          console.log("IF EN USO...")
         } else {
-          console.log("ACTIVANDO ELSE...")
           this.router.navigate(['/gamelist']);
         }
       },
@@ -71,13 +90,30 @@ export class DashboardComponent implements OnInit {
   }
 
   initGame() {
-    this.gameServices.startGame({ juegoId: this.gameId }).subscribe({
+    this.gameServices.getSocketInfo(this.gameId).subscribe({
+      next: (message: { type: any }) => {
+        if (message.type == 'cardgame.tiempocambiadodeltablero') {
+          console.log(message.type);
+        }
+      },
+    });
+    this.gameServices.startRound({ juegoId: this.gameId }).subscribe({
       next: (res) => {
-        console.log("Init game: ",res);
+        console.log('Init game');
       },
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+  ponerCarta(cardId: string) {
+    console.log('CARTA PONIDA', this.userId, cardId, this.gameId);
+    this.gameServices.putCard(this.userId, cardId, this.gameId).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (error) => console.log(error),
+      complete: () => console.log('juegocreado'),
     });
   }
 }

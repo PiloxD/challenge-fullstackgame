@@ -24,7 +24,6 @@ export class GameListComponent implements OnInit {
       next: (resp) => {
         this.gamesNoStarted = resp.filter((e) => e.iniciado == false);
         this.gamesStarted = resp.filter((e) => e.iniciado == true);
-
       },
       error: (err) => {
         console.log(err);
@@ -37,12 +36,10 @@ export class GameListComponent implements OnInit {
     this.gameService.startGame({ juegoId: gameId }).subscribe({
       next: (res) => {
         this.websocketService.conect(gameId).subscribe({
-          next: (res) => console.log("respuesta startGame: ",res),
         });
       },
       complete: () => {
 
-        console.log("game id: ",gameId)
         this.router.navigate([`/dashboard/${gameId}`]);
       },
     });

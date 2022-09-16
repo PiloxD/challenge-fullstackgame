@@ -2,8 +2,19 @@ package org.example.cardgame.usecase.usecase;
 
 import co.com.sofka.domain.generic.DomainEvent;
 import org.example.cardgame.domain.command.PonerCartaEnTablero;
-import org.example.cardgame.domain.events.*;
-import org.example.cardgame.domain.values.*;
+import org.example.cardgame.domain.events.CartaPuestaEnTablero;
+import org.example.cardgame.domain.events.CartaQuitadaDelMazo;
+import org.example.cardgame.domain.events.JuegoCreado;
+import org.example.cardgame.domain.events.JugadorAgregado;
+import org.example.cardgame.domain.events.RondaCreada;
+import org.example.cardgame.domain.events.RondaIniciada;
+import org.example.cardgame.domain.events.TableroCreado;
+import org.example.cardgame.domain.values.Carta;
+import org.example.cardgame.domain.values.CartaMaestraId;
+import org.example.cardgame.domain.values.JugadorId;
+import org.example.cardgame.domain.values.Mazo;
+import org.example.cardgame.domain.values.Ronda;
+import org.example.cardgame.domain.values.TableroId;
 import org.example.cardgame.usecase.gateway.JuegoDomainEventRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +27,6 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Set;
-
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +56,8 @@ class PonerCartaEnTableroUseCaseTest {
                 .expectNextMatches(domainEvent -> {
                     var event = (CartaQuitadaDelMazo) domainEvent;
                     Assertions.assertEquals("yyyyy", event.getJugadorId().value());
-                    return "xxxxx".equals(event.getCarta().value().cartaId().value());                    })
+                    return "xxxxx".equals(event.getCarta().value().cartaId().value());
+                })
                 .expectComplete()
                 .verify();
     }
@@ -57,7 +68,7 @@ class PonerCartaEnTableroUseCaseTest {
         var cartas = Set.of(new Carta(
                 CartaMaestraId.of("xxxxx"),
                 20,
-                false, true
+                false, true, "img.jpg"
         ));
         var ronda = new Ronda(1, Set.of(jugadorId, jugador2Id));
         return Flux.just(

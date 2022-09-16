@@ -100,7 +100,6 @@ export class NewGameComponent implements OnInit {
       jugadores: { ...this.comandCreateGame.jugadores, ...playersCommand },
     };
     this.gameService.createGame(this.comandCreateGame).subscribe({
-      next: (res) => console.log(res),
       complete: () => {
         this.disableUser(users);
         this.router.navigate(['/gamelist']);

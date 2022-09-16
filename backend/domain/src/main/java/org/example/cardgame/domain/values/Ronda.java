@@ -12,16 +12,16 @@ public class Ronda implements ValueObject<Ronda.Props> {
     private final Integer numero;
     private final Boolean estaIniciada;
 
-    /**
-     * Instantiates a new Ronda.
-     *
-     * @param numero    the numero
-     * @param jugadores the jugadores
-     */
     public Ronda(Integer numero, Set<JugadorId> jugadores) {
         this.jugadores = jugadores;
         this.numero = numero;
         this.estaIniciada = false;
+        if(numero <= 0){
+            throw new IllegalArgumentException("El numero de la ronda debe no puede ser cero o negativo");
+        }
+        if(jugadores.size() <= 1){
+            throw new IllegalArgumentException("La ronda se crear con minimo 2 jugadores");
+        }
     }
 
     private Ronda(Integer numero, Set<JugadorId> jugadores, Boolean estaIniciada) {
@@ -30,34 +30,18 @@ public class Ronda implements ValueObject<Ronda.Props> {
         this.estaIniciada = estaIniciada;
     }
 
-    /**
-     * Iniciar ronda ronda.
-     *
-     * @return the ronda
-     */
-    public Ronda iniciarRonda() {
+    public Ronda iniciarRonda(){
         return new Ronda(this.numero, this.jugadores, true);
     }
 
-    /**
-     * Terminar ronda ronda.
-     *
-     * @return the ronda
-     */
-    public Ronda terminarRonda() {
+    public Ronda terminarRonda(){
         return new Ronda(this.numero, this.jugadores, false);
     }
 
-    /**
-     * Incrementar ronda ronda.
-     *
-     * @param jugadores the jugadores
-     * @return the ronda
-     */
-    public Ronda incrementarRonda(Set<JugadorId> jugadores) {
+    public Ronda incrementarRonda(Set<JugadorId> jugadores){
+        System.out.println("nueva ronda");
         return new Ronda(this.numero + 1, jugadores, false);
     }
-
     @Override
     public Props value() {
         return new Props() {
@@ -79,29 +63,10 @@ public class Ronda implements ValueObject<Ronda.Props> {
     }
 
 
-    /**
-     * The interface Props.
-     */
+
     public interface Props {
-        /**
-         * Jugadores set.
-         *
-         * @return the set
-         */
         Set<JugadorId> jugadores();
-
-        /**
-         * Numero integer.
-         *
-         * @return the integer
-         */
         Integer numero();
-
-        /**
-         * Esta iniciada boolean.
-         *
-         * @return the boolean
-         */
         Boolean estaIniciada();
     }
 }
