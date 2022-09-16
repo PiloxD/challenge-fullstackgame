@@ -1,10 +1,7 @@
 package org.example.cardgame.application.handle.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Map;
 
-@Document
 public class CardListViewModel {
     private Integer id;
     private String nombre;

@@ -7,13 +7,12 @@
     <div class="topBox">
       <div>
         <h6>Jugadores: {{ board?.ronda?.jugadores?.length }}</h6>
-        <h6>Tiempo: {{ board?.ronda?.tiempo }}</h6>
+        <h6>Tiempo: {{gameTime}}</h6>
       </div>
     </div>
-
-    <div class="px2"></div>
-
-    <div class="px2"></div>
+    <div class="card mt-2 col-md-5 carta" *ngFor="let carta of cartasTablero">
+      <h2>Carta puesta</h2>
+    </div>
     <button class="btn" (click)="initGame()">Iniciar</button>
   </div>
 
@@ -21,13 +20,13 @@
     <div class="topBox">Cartas</div>
 
     <div class="l-container">
-      <div class="b-game-card"  *ngFor="let card of list?.cartas">
-        <button class="apostarbtn"  (click)="ponerCarta(card.cartaId)">
-        <div class="b-game-card__cover">
-          <img [src]="card.jugadorId" alt="Image" width="100%" />
-          <h4 >{{ card.poder }}</h4>
-        </div>
-      </button>
+      <div class="b-game-card" *ngFor="let card of list?.cartas">
+        <button class="apostarbtn" (click)="ponerCarta(card.cartaId)">
+          <div class="b-game-card__cover">
+            <img [src]="card.jugadorId" alt="Image" width="100%" />
+            <h4>{{ card.poder }}</h4>
+          </div>
+        </button>
       </div>
     </div>
     <button class="btn" (click)="getDeckPlayer()">Traer cartas</button>

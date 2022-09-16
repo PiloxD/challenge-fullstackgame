@@ -10,15 +10,20 @@ import org.example.cardgame.domain.command.CrearJuegoCommand;
 import org.example.cardgame.usecase.usecase.CrearJuegoUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
+import java.util.Objects;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
@@ -74,17 +79,7 @@ public class QueryHandle {
                     .then(ServerResponse.ok().build())
         );
     }
-    /*
-    @Bean
-    public RouterFunction<ServerResponse> updateCard() {
-        return route(
-                PUT("/card/update/{name}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> template.findAndModify((filterCardByName(request.pathVariable("nombre"))), request.bodyToMono(CardListViewModel.class), "cards")
-                        .then(ServerResponse.ok().build())
-        );
-    }
 
-*/
 
     @Bean
     public RouterFunction<ServerResponse> getTablero() {
@@ -141,7 +136,9 @@ public class QueryHandle {
                 Criteria.where("juegoId").is(juegoId).and("uid").is(uid)
         );
     }
-
+    private Update update(String name, Map<String, Object> value){
+            return new Update();
+    }
 
 
 }

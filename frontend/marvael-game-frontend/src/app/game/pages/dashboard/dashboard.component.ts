@@ -15,9 +15,11 @@ import { Dashboard } from '../../models/dashboard.model';
 export class DashboardComponent implements OnInit {
   private gameId!: string;
   private userId: string;
+  public gameTime: number = 0;
   list: List | null = null;
   board: Dashboard | null = null;
   isMainPlayer: boolean = false;
+  cartasTablero: Array<string> = new Array();
 
   constructor(
     private websocketService: WebsocketService,
@@ -28,6 +30,21 @@ export class DashboardComponent implements OnInit {
   ) {
     this.userId = this.userService.getCurrentUser()?.uid!;
   }
+
+  // ngOnInit(): void {
+  //   this.activatedRoute.params
+  //     .pipe(
+  //       switchMap(({ id }) => {
+  //         this.gameId = id;
+  //         return this.websocketService.conect(id);
+  //       })
+  //     )
+  //     .subscribe(() => {});
+
+  //   this.websocketService.conect(this.gameId).subscribe((res) => {});
+  //   this.getDeckPlayer();
+  //   this.getBoardId();
+  // }
 
   ngOnInit(): void {
     this.activatedRoute.params
@@ -40,38 +57,41 @@ export class DashboardComponent implements OnInit {
       .subscribe(() => {});
 
     this.websocketService.conect(this.gameId).subscribe((res) => {});
+    this.gameServices.getSocketInfo(this.gameId).subscribe({
+      next: (message) => {
+        switch (message.type) {
+          case 'cardgame.rondacreada':
+            console.log('cartas nuevas yuju!');
+            this.getDeckPlayer();
+            this.cartasTablero = new Array();
+            break;
+          case 'cardgame.tiempocambiadodeltablero':
+            if ((message.tiempo == 4) && (this.cartasTablero.length == 0) ) {
+              this.putCardAFK();
+            }
+            this.gameTime = message.tiempo;
+            break;
+          case 'cardgame.ponercartaentablero':
+            this.agregarCartaTablero();
+            break;
+          case 'cardgame.juegofinalizado':
+            alert('GANADOOOOR HPTA');
+            break;
+          default:
+            break;
+        }
+      },
+      error: () => console.log('error'),
+      complete: () => console.log('object'),
+    });
     this.getDeckPlayer();
     this.getBoardId();
   }
-  // ngOnInit(): void {
-  //   this.gameServices.getSocketInfo(this.gameId).subscribe({
-  //     next: (message: { type: any; }) => {
-  //       switch (message.type) {
-  //         case "cardgame.rondacreada":
-  //           break;
-  //         case "cardgame.tiempocambiadodeltablero":
-  //           break;
-  //         case "cardgame.ponercartaentablero":
-  //           break;
-  //         case "cardgame.juegofinalizado":
-  //           this.router.navigate([`/winner/${this.gameId}`]);
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     },
-  //     error: () => console.log('error'),
-  //     complete: () => console.log('object'),
-  //   });
-  //   this.getDeckPlayer();
-  //   this.getBoardId();
-  // }
 
   getDeckPlayer() {
     this.gameServices.getListByPlayer(this.userId, this.gameId).subscribe({
       next: (res) => {
         this.list = res;
-        console.log('AAAA XD: ', this.list);
       },
     });
   }
@@ -106,8 +126,21 @@ export class DashboardComponent implements OnInit {
       },
     });
   }
+  putCardAFK() {
+    let cardRng = this.list[1][0]
+    console.log("CARD RNG>:",cardRng)
+    this.gameServices.putCard(this.userId, cardRng, this.gameId).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (error) => console.log(error),
+      complete: () => console.log('ESTÁS AFK, CARTA AÑADIDA'),
+    });
+  }
+  agregarCartaTablero() {
+    this.cartasTablero.push('1');
+  }
   ponerCarta(cardId: string) {
-    console.log('CARTA PONIDA', this.userId, cardId, this.gameId);
     this.gameServices.putCard(this.userId, cardId, this.gameId).subscribe({
       next: (res) => {
         console.log(res);

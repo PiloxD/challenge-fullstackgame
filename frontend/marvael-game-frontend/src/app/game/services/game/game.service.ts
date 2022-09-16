@@ -12,6 +12,7 @@ import { webSocket } from 'rxjs/webSocket';
 export class GameService {
   private URL: string = 'http://localhost:8080';
   private socket: any;
+
   constructor(private http: HttpClient) {}
 
   createGame(body: any): Observable<object> {
@@ -47,7 +48,7 @@ export class GameService {
       juegoId: gameId,
     });
   }
-  getSocketInfo(idGame: string) {
+  getSocketInfo(idGame: string): any {
     this.socket = webSocket(`ws://localhost:8081/retrieve/${idGame}`);
     return this.socket;
   }
